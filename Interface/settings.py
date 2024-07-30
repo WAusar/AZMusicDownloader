@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt, pyqtSignal, QUrl
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QWidget, QLabel, QFileDialog
 from sys import platform, getwindowsversion
-from helper.getvalue import YEAR, AUTHOR, VERSION, HELP_URL, FEEDBACK_URL, autopath, apilists
+from helper.getvalue import YEAR, AUTHOR, VERSION, HELP_URL, FEEDBACK_URL, autopath, apilists, SERVER_URL
 from helper.inital import delfin, get_update, showup, setSettingsQss
 from helper.localmusicsHelper import ref
 from helper.SettingHelper import DeleteAllData, editapi
@@ -154,6 +154,21 @@ class SettingInterface(ScrollArea):
             self.tr('通过提供反馈来帮助我们打造更好的应用'),
             self.aboutGroup
         )
+        self.sponsor = ExpandGroupSettingCard(
+            FIF.HEART,
+            self.tr("赞助名单"),
+            self.tr("给本项目赞助的热心人"),
+            self.aboutGroup
+        )
+        self.serverCard = HyperlinkCard(
+            SERVER_URL,
+            self.tr('领创云'),
+            FIF.IOT,
+            self.tr('云计算支持'),
+            self.tr('本项目由 领创云 提供云计算支持'),
+            self.sponsor
+        )
+        self.sponsor.addGroupWidget(self.serverCard)
         self.aboutCard = PushSettingCard(
             self.tr('更新日志'),
             FIF.INFO,
@@ -256,6 +271,7 @@ class SettingInterface(ScrollArea):
             self.BetaOnlyGroup.addSettingCard(self.plugin_Card)
             self.BetaOnlyGroup.addSettingCard(self.toast_Card)
 
+        self.aboutGroup.addSettingCard(self.sponsor)
         self.aboutGroup.addSettingCard(self.helpCard)
         self.aboutGroup.addSettingCard(self.feedbackCard)
         self.aboutGroup.addSettingCard(self.aboutCard)
